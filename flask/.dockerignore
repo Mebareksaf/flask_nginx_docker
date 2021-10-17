@@ -1,0 +1,3 @@
+#we specify which files and folders to ignore 
+env/
+__pycache__/

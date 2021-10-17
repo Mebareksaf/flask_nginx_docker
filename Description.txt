@@ -1,0 +1,38 @@
+What we do here is creating two different folders (each container has its own folder)
+
+in each we'll have a dockerfile to build the container from the image, and then we'll create a Docker-compose file to
+run all the services together.
+------------
+FLASK:
+1.in the flask folder we enter using the terminal.
+	1- create a virtual environment using "python -m venv virtual_envirn"
+	2- install flask and uWSGI using "pip install flask uwsgi"
+   		**use "pip list" to check if packages were installed.
+	3- in Flask folder, go ahead and create "run.py" which will be the enrtypoint of the app.
+	4- Create a new folder called "app".
+   		** in that folder create a file called "__init__.py".
+   		** Another one "views.py".
+   		**We need to generate our "requirements.txt" using "pip freeze > requirements.txt"
+   		**Next we need to create a ".dockerignore" file works like ".gitignore" file, it tells docker to 
+                  ignore files and folders specified inside it from copying them or building them with the container.
+	5- Create the "app.ini" which contains the uWSGI Config.
+	6- We work on the dockerfile which contains our instructions to follow to build our container.
+	7- to test the app we first get in the "flask" directory and in the terminal:
+      		* "set FLASK_APP=run.py" on win, on linux "export FLASK_APP=run.py"
+      		* "set FLASK_ENV=developement"
+      		* "flask run"
+----------------
+NGINX:
+2.Move ahead to "nginx" folder:
+   **create "Dockerfile"(each container needs its own dockerfile).
+   **create "nginx.conf"(contians custom configuration for nginx).
+----------------
+DOCKER:
+3.Create the "docker-compose.yml" file in the parent folder containing both "nginx" & "flask" folders, used to define
+our services, link them together and do things like expose ports..
+4.Build our CONTAINERS with "docker-compose build".
+5.Run our containers with "docker-compose up".
+6.If we Change our code and refresh the app we don't see the change we made until we re-build our containers.
+  ** stop containers by "Ctrl+C".
+  ** use "docker-compose up --build" which rebuilds the containers
+  ** Using "docker-compose down" will stop the containers, removes them and the networks connecting them.
